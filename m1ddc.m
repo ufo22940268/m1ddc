@@ -17,6 +17,8 @@ extern IOReturn IOAVServiceWriteI2C(IOAVServiceRef service, uint32_t chipAddress
 #define RED 0x16 // VCP Code - Video Gain (Drive): Red
 #define GREEN 0x18 // VCP Code - Video Gain (Drive): Green
 #define BLUE 0x1A // VCP Code - Video Gain (Drive): Blue
+#define PBP 0xE9
+#define PBP_SCREEN 0xE8
 
 #define DDC_WAIT 10000 // depending on display this must be set to as high as 50000
 #define DDC_ITERATIONS 2 // depending on display this must be set higher
@@ -183,6 +185,8 @@ int main(int argc, char** argv) {
         else if ( !(strcmp(argv[s+2], "red")) || !(strcmp(argv[s+2], "r")) ) { data[2] = RED; }
         else if ( !(strcmp(argv[s+2], "green")) || !(strcmp(argv[s+2], "g")) ) { data[2] = GREEN; }
         else if ( !(strcmp(argv[s+2], "blue")) || !(strcmp(argv[s+2], "b")) ) { data[2] = BLUE; }
+        else if ( !(strcmp(argv[s+2], "pbp")) ) { data[2] = PBP; }
+        else if ( !(strcmp(argv[s+2], "pbp-screen")) ) { data[2] = PBP_SCREEN; }
         else {
 
             returnText = @"Use 'luminance', 'contrast', 'volume' or 'mute' as second parameter! Enter 'm1ddc help' for help!\n";
