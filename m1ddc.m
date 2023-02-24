@@ -290,24 +290,25 @@ int main(int argc, char** argv) {
 
             }
 
-            data[0] = 0x84;
-            data[1] = 0x03;
-            data[3] = (setValue) >> 8;
-            data[4] = setValue & 255;
-            data[5] = 0x6E ^ 0x51 ^ data[0] ^ data[1] ^ data[2] ^ data[3] ^ data[4];
+            if (setValue != -92) {
+                data[0] = 0x84;
+                data[1] = 0x03;
+                data[3] = (setValue) >> 8;
+                data[4] = setValue & 255;
+                data[5] = 0x6E ^ 0x51 ^ data[0] ^ data[1] ^ data[2] ^ data[3] ^ data[4];
 
-            for (int i = 0; i <= DDC_ITERATIONS; i++) {
+                for (int i = 0; i <= DDC_ITERATIONS; i++) {
 
-                usleep(DDC_WAIT);
-                err = IOAVServiceWriteI2C(avService, 0x37, 0x51, data, 6);
+                    usleep(DDC_WAIT);
+                    err = IOAVServiceWriteI2C(avService, 0x37, 0x51, data, 6);
 
-                if (err) {
+                    if (err) {
 
-                    returnText = [NSString stringWithFormat:@"I2C communication failure: %s\n", mach_error_string(err)];
-                    goto cya;
+                        returnText = [NSString stringWithFormat:@"I2C communication failure: %s\n", mach_error_string(err)];
+                        goto cya;
 
+                    }
                 }
-
             }
 
             if ( !(strcmp(argv[s+1], "chg")) ) {
